@@ -14,9 +14,10 @@ expressions.
 
 ### Keywords
 
-Keywords are denoted by a quoted string and are a sequence of alphabetic characters.  These are the reserved words of the language, so no variables may be named them.
+Keywords are denoted by a quoted string and are a sequence of alphabetic characters.  These are the reserved words of the language, so no variables may be named them.  Assume keywords are followed by whitespace.
 
     PRINT      "print"
+    READ       "read"
     INT        "int"
     RETURN     "return"
 
@@ -34,6 +35,9 @@ Symbols, like keywords, are quoted strings, but in this case use puncutation sym
     RPAREN     ")"
     ASSIGN     "="
     EQUALS     "=="
+    NEQUALS    "!="
+    LT         "<"
+    GT         ">"
     AND        "&&"
     OR         "||"
     NOT        "!"
@@ -71,11 +75,17 @@ right-hand side of our patterns.
     DIGIT      [0-9]
     LETTER     [A-Za-z]
 
-Integers and identifiers are the only two tokens that 
+Integers and identifiers are the only two tokens that have attributes. 
 
     NUMBER      MINUS? DIGIT DIGIT*
     IDENTIFIER  LETTER (LETTER|DIGIT)*
 
+By convention, IDENTIFER matches the longest possible sequence, so `integer` is a single identifier, not the INT keyword followed by an identifier. 
+
 ### Whitespace
 
 Whitespace (spaces, newlines, tabs, etc) can appear between any tokens and should be ignored.  This means that a newline can appear between any tokens, and not necessarily at the end of a statement.  All other nonprintable characters are a lexer errors.
+
+### Lexeme size
+
+All lexemes are ASCII.  The maximum lexeme size is 4095 characters.

@@ -17,16 +17,17 @@ Skills needed:
 ### Grammar
 
     program
-      = declaration* function* statement*
+      = function function*
 
     function
-      = INT IDENTIFIER LPAREN ( IDENTIFIER (COMMA IDENTIFIER)* )? RPAREN LCURLY declaration* statement* RCURLY
+      = INT IDENTIFIER LPAREN ( INT IDENTIFIER (COMMA INT IDENTIFIER)* )? RPAREN LCURLY declaration* statement* RCURLY
 
     declaration
       = INT IDENTIFIER SEMI
 
     statement
       = PRINT expression SEMI
+      | READ IDENTIFIER SEMI
       | IDENTIFIER ASSIGN expression SEMI
       | IF LPAREN expression RPAREN statement
       | IF LPAREN expression RPAREN statement ELSE statement
@@ -35,13 +36,15 @@ Skills needed:
       | RETURN expression SEMI
 
     expression
-      = expression PLUS NUMBER
-      | expression MINUS NUMBER
-      | expression TIMES NUMBER
-      | expression DIVIDE NUMBER
-      | expression EQUALS NUMBER
-      | expression AND NUMBER
-      | expression OR NUMBER
+      = expression PLUS expression
+      | expression MINUS expression
+      | expression TIMES expression
+      | expression DIVIDE expression
+      | expression MOD expression
+      | expression EQUALS expression
+      | expression LT expression
+      | expression AND expression
+      | expression OR expression
       | NOT expression
       | LPAREN expression RPAREN
       | NUMBER
@@ -52,12 +55,18 @@ Skills needed:
 ### What Has Changed?
 
 - A program can now have function definitions after declarations
-- A new function non-terminal defines syntax of function definitions.  Like the previous program, it contains a list of declarations followed by a list of statements.
+- A new function non-terminal defines syntax of function definitions.  Like the previous program, it contains a list of declarations followed by a list of statements.  The `?` means that the parenthesized part of the production is optional, i.e., it either doesn't appear or appears once.
 - There is a new expression production for function application.
 
 ### Notes on Semantics
 
-- There are no global variables, only global function names.  Function and variable names are in the same namespace so must be unique.
+- There are no global variables, only global function names.  It is left as a bonus exercise to implement global variables.
+
+- Functions should be defined before they are used.
+
+- There should one function named "main" of type () -> int.
+
+- Functions must end with a return statement.
 
 - Functions have their own scope, that is the same identifier can be used in different function bodies and refer to different memory locations.
 
@@ -66,3 +75,12 @@ Skills needed:
 - A function always has a return value that is initialized to zero.  A function call is evaluated and its value replaces the call in the expression before continuing to evaluate the expression.
 
 - The parameters to a function call are fully evaluated before binding to its formal parameters.
+
+
+## New template
+
+Since this version of the compiler can support defining functions, there is no need for the template to explicitly emit a main method.  Instead use the new [template](template.h) macro `PROJ4_PROLOGUE`.
+
+## Example of code generation for functions
+
+This [SimpleC program](examples/functions_example.simplec) is translated to this [LLVM program](examples/functions_example.ll). 

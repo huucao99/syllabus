@@ -10,7 +10,7 @@ Objectives:
 ### Grammar
 
     program
-      = function*
+      = declaration* function* statement*
 
     function
       = INT IDENTIFIER LPAREN IDENTIFIER (COMMA IDENTIFIER)* RPAREN LCURLY declaration* statement* RCURLY
@@ -21,6 +21,7 @@ Objectives:
 
     statement
       = PRINT expression SEMI
+      | READ IDENTIFIER SEMI
       | IDENTIFIER ASSIGN expression SEMI
       | IDENTIFIER LBRACE NUMBER RBRACE ASSIGN expression SEMI
       | IF LPAREN expression RPAREN statement
@@ -29,18 +30,19 @@ Objectives:
       | LCURLY statement* RCURLY
 
     expression
-      = expression PLUS NUMBER
-      | expression MINUS NUMBER
-      | expression TIMES NUMBER
-      | expression DIVIDE NUMBER
-      | expression EQUALS NUMBER
-      | expression AND NUMBER
-      | expression OR NUMBER
+      = expression PLUS expression
+      | expression MINUS expression
+      | expression TIMES expression
+      | expression DIVIDE expression
+      | expression MOD expression
+      | expression EQUALS expression
+      | expression LT expression
+      | expression AND expression
+      | expression OR expression
       | NOT expression
       | LPAREN expression RPAREN
       | NUMBER
       | IDENTIFIER
-      | IDENTIFIER LBRACE NUMBER RBRACE
       | IDENTIFIER LPAREN ( expression (COMMA expression)* )? RPAREN
 
 

@@ -76,7 +76,7 @@ Commit the changes to the file
 
     git commit README.md
 
-Add a message describe the change to the editor that appears.  Save and exit the editor.  For the `nano` editor, exit using `ctrl-x`, then hit `y` to confirm saving, and finally hit "<enter>" to confirm the file name.
+Add a message describe the change to the editor that appears.  Save and exit the editor.  For the `nano` editor, exit using `ctrl-x`, then hit `y` to confirm saving, and finally hit `<enter>` to confirm the file name.
 
 Check the status of the repository.  You should see that there are no local changes, but you are out of sync with the remote repo
 
@@ -90,13 +90,10 @@ Check the status of the repository again.
 
     git status
     
-To add a new file do
+To add your new source files do
 
-    echo "my new file" > test
-    git status
-    git add test
-    git status
-    git commit test
+    git add simplec.c Makefile
+    git commit simplec.c Makefile
     
 Then push as before to sync with GitHub
 
@@ -104,9 +101,9 @@ Then push as before to sync with GitHub
     
 To remove a file
 
-    git rm test
+    git rm all.ll
     git status
-    git commit test
+    git commit all.ll
     git status
 
 Then push as before to sync with GitHub
@@ -125,13 +122,15 @@ Check for any pending changes first
 
     git status
     
-Commit any pending changes
+Commit any pending changes, giving the name of your source files (for instance `simplec.c`)
 
-    git commit file1 file2 etc
-    
+    git commit simplec.c Makefile
+
+Repeat this for every file you would like to sync to the GitHub repo.
+
 Tag the commit
 
-    git tag test_tag
+    git tag proj0  # use the tag specific to the project you are submitting
     
 Check the log to see the new tag (`q` to quit)
 
